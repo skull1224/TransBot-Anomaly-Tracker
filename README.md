@@ -23,12 +23,12 @@
 
 
 #### 5. **기술 스택**
-```markdown
-
 ## 기술 스택
 - **Python**: 데이터 처리 및 AI 모델 구현.
 - **TensorFlow & PyTorch**: 딥러닝 기반 모델 학습 및 추론.
 - **ROS (Robot Operating System)**: 로봇 자율 주행 및 경로 탐색.
 - **OpenCV & YOLO**: 이미지 처리 및 객체 탐지.
 - **LLM & RAG**: 생성형 AI 기반 요약 및 상황 기록.
+
+
 
