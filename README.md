@@ -76,7 +76,8 @@ Mapping 이후 Goal position을 입력하면 해당 위치로 이동하는 모�
    - Gmapping, hector 등
 2. **트랜스 봇의 상세한 동작 시나리오 작성**
 3. **Package customizing**
-   - bring-up, navigation 등 package를 필요한 기능만 모아서 launch 시킬 수 있도록 수정하고 repackaging
+   - bring-up, navigation 등 transbot package에서 필요한 기능만 모아서 repackaging
+   - 완료 후, ROS package 수정
 
 
 ---
