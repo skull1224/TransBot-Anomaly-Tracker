@@ -214,10 +214,12 @@ D --> E[행동 분류 및 경고]
 - **작업 내용**:
   - YOLO로 탐지된 객체별 MediaPipe로 자세 데이터 생성.
   - 행동 이벤트 구간에서 포즈 데이터를 시각화 및 저장.
-- **작업 과정 및 문제해결**
-  - MediaPipe 적용
-  
-  - blaze pose 적용
+- **작업 과정 및 문제 해결**
+  - MediaPipe Pose 적용
+    ![MediaPipe 적용 결과](readme_img/mediapipe.png)
+
+  - BlazePose 적용
+    ![BlazePose 적용 결과](readme_img/blazepose.png)
  
 
 #### **4-2 엣지 검출 기반 방식**
