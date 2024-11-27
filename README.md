@@ -171,6 +171,7 @@ D --> E[행동 분류 및 경고]
 
 ### 1. 데이터 분리 및 정리
 - **목적**: 구글 드라이브에 업로드된 학습 데이터 준비를 위한 구조 정리.
+- **사용 데이터**: AIHub CCTV이상행동 데이터 (url: https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=&topMenu=&aihubDataSe=data&dataSetSn=171)
 - **작업 내용**:
   - 비디오(mp4)와 라벨(XML) 파일 매칭.
   - 불필요한 파일 제거 및 행동 유형별로 이름 변경 후 정리.
@@ -220,7 +221,7 @@ D --> E[행동 분류 및 경고]
 
   - BlazePose 적용
     ![BlazePose 적용 결과](readme_img/blazepose.png)
- 
+
 
 #### **4-2 엣지 검출 기반 방식**
 - **목적**: 모델 경량화와 사람 외관의 구조적 특징 강조하여 분석 효과 향상.
@@ -233,12 +234,13 @@ D --> E[행동 분류 및 경고]
 - **작업 과정 및 문제해결**
   - 이미지 필터링 후 윤곽선 검출 테스트 결과
 ![ROI 탐지 예제](readme_img/edge_test.png)
-
   - 영상 배경 제거 및 필터링 후 윤곽선 검출 테스트 결과
 ![ROI 탐지 예제](readme_img/non_green_edge.png)
-
   - 최종 결과: 배경 제거 후 median 필터를 적용한 전처리 방식 선정 
 ![ROI 탐지 예제](readme_img/non_green_edge2.png)
+
+  - 크로마키 영상마다의 배경 픽셀값이 상이하여 표본 영상을 선정하여 배경제거에 필요한 HSV값 범위 추출
+![ROI 탐지 예제](readme_img/non_green_edge3.png)
 
 ### 5. 추후 계획
 #### **5-1 미디어파이프 기반 파이프라인 생성**
