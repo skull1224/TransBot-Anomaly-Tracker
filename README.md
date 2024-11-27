@@ -225,8 +225,10 @@ D --> E[행동 분류 및 경고]
   - Gaussian Blur, Median Filter 등으로 노이즈 제거.
   - Canny Edge Detection으로 윤곽선을 추출하고 저장.
 - **작업 과정 및 문제해결**
-  - 
+  - 이미지 필터링 후 윤곽선 검출 테스트 결과
 ![ROI 탐지 예제](readme_img/edge_test.png)
+
+  - 영상 배경 제거 및 필터링 후 윤곽선 검출 테스트 결과
 ![ROI 탐지 예제](readme_img/non_green_edge.png)
 
 
