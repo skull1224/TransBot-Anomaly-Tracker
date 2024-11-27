@@ -156,7 +156,7 @@ Mapping 이후 Goal position을 입력하면 해당 위치로 이동하는 모�
 
 ---
 
-## **모델 동작 워크플로우**
+## **학습 모델 동작 워크플로우**
 ```mermaid
 graph TD
 A[입력 영상] --> B[YOLO: 객체 탐지]
