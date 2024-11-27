@@ -41,11 +41,48 @@ CCTV 사각지대를 보완하고, 실시간 범죄 탐지로 주거 환경을 �
 ---
 # 트랜스 봇(H/W)
 
+## Jetson nano <-> Ubuntu 통신
+Jetson nano에서 Visualization tool을 사용하기 어렵기 때문에 Laptop과 연결하여 사용
+![슬라이드1](https://github.com/user-attachments/assets/a42c00e4-76d4-4536-8fc1-5dfcf12d9892)
+
+1. **Linux 연결**: Ubuntu 18.04가 LAN을 인식하지 못함 -> Window를 통해 VMWare로 접속
+2. **Jeton 연결**: Window를 통해 VNC로 접속
+
+## 통신 및 제어:
+하나의 PC를 통해 Mapping하는 모습
+![슬라이드2](https://github.com/user-attachments/assets/34c045cb-fa00-455e-b37e-487bfc769696)
+
+1. **좌측 사진**: PC화면
+2. **우측 사진**: 동작모습
+
+## 로봇 미들웨어(M/W)
+하드웨어와 애플리케이션 소프트웨어 사이에서 동작하며, 서로 상호작용할 수 있도록 데이터 전달과 관리 기능을 제공
+![슬라이드3](https://github.com/user-attachments/assets/39097cce-71d6-4d69-b3ab-0320d9ea3a69)
+
+1. **OS 통신**: ROS를 통해 Master(Jetpack)-Slave(Linux) 통신
+2. **어플리케이션**:
+   - SLAM: Localization, Mapping
+   - Rviz: Visualization
+3. **ROS Packages**:
+   - Bring-up packages: Lidar, Camera, Motor 등의 H/W를 동작하는 ROS node의 package
+   - Navigation packages: 장애물 회피, Mapping, Navigation 등의 ROS node의 package
+
+## 트랜스 봇 동작 모습
+Mapping 이후 Goal position을 입력하면 해당 위치로 이동하는 모습
+![슬라이드4](https://github.com/user-attachments/assets/ec45ae6a-45aa-40d5-b856-00921d795892)
+
+## H/W 추후 계획
+1. **mapping algorithm 학습**
+   - Gmapping, hector 등
+2. **트랜스 봇의 상세한 동작 시나리오 작성**
+3. **Package customizing**
+   - bring-up, navigation 등 transbot package에서 필요한 기능만 모아서 repackaging
+   - 완료 후, ROS package 수정
 
 
 ---
 
-# **AI 모델(S/W)**
+# **AI 학습 모델 구축(S/W)**
 
 ## **프로젝트 배경 및 모델 선정 과정**
 ### **1. 주요 목표**
@@ -61,7 +98,7 @@ CCTV 사각지대를 보완하고, 실시간 범죄 탐지로 주거 환경을 �
 - 시간 기반 행동 패턴 분석.  
 - 제한된 하드웨어 자원에서 효율적인 동작.  
 
-### **2. 모델 선정 기준**
+### **2. 학습 모델 선정 기준**
 - **실시간성**: 시간 지연 없이 빠르게 처리 가능해야 함.  
 - **정확성**: 객체 탐지와 이상 행동 분류 정확도 확보.  
 - **경량성**: Jetson Nano 등 제한된 자원에서도 원활히 실행.  
@@ -69,7 +106,7 @@ CCTV 사각지대를 보완하고, 실시간 범죄 탐지로 주거 환경을 �
 
 ---
 
-### 3. **초기 검토된 모델**
+### 3. **초기 검토된 학습 모델**
 | **모델 조합**         | **장점**                                       | **단점**                                          |
 |-----------------------|-----------------------------------------------|--------------------------------------------------|
 | EfficientNet + GRU    | 높은 특징 추출 정확도                          | 높은 계산 비용, 실시간 처리 속도 부족              |
@@ -78,18 +115,17 @@ CCTV 사각지대를 보완하고, 실시간 범죄 탐지로 주거 환경을 �
 
 ---
 
-### 4. **최종 모델 선정**
+### 4. **최종 학습 모델 선정**
 위 옵션들의 한계를 검토한 후, 다음 모델을 최종 선정했습니다:
 
 | **기능**         | **최초 검토된 모델**              |        **최종 선정된 모델**                   | **이유**                                          |
 |-----------------------|------------------------------- | ----------------|--------------------------------------------------|
-| 객체 탐지              | EfficientNet, MobileNet, 3D CNN   |     YOLO (Tiny 버전)        | 실시간 객체 탐지 성능과 경량화된 구조, Jetson Nano에서 실시간 처리 가능.  |
-| MobileNet + LSTM      | GRU, LSTM, TSM                   |     GRU, LSTM, TSM       | 시간적 패턴 분석 기능, 상황에 맞는 유연한 조합 사용 가능.         |
-| 3D CNN + GRU          | EfficientNet, MobileNet                   |  YOLO (내장된 CNN 기능)         | YOLO (내장된 CNN 기능)         |
+| 객체 탐지(YOLO)        | EfficientNet, MobileNet, 3D CNN   |     Darknet (Tiny 버전)  | 실시간 객체 탐지 성능과 경량화된 구조, Jetson Nano에서 실시간 처리 가능.  |
+| 시계열 분석 모델        | GRU, LSTM, TSM                   |     GRU, LSTM, TSM       | 시간적 패턴 분석 기능, 상황에 맞는 유연한 조합 사용 가능.         |
 
 ---
 
-## 최종 모델 구성
+## 최종 학습 모델 구성
 
 ### 1. **YOLO(Tiny 버전)**
 - **역할**: 실시간 객체 탐지 및 특징 추출.
@@ -120,7 +156,7 @@ CCTV 사각지대를 보완하고, 실시간 범죄 탐지로 주거 환경을 �
 
 ---
 
-## **모델 동작 워크플로우**
+## **학습 모델 동작 워크플로우**
 ```mermaid
 graph TD
 A[입력 영상] --> B[YOLO: 객체 탐지]
@@ -134,9 +170,10 @@ D --> E[행동 분류 및 경고]
 
 ### 1. 데이터 분리 및 정리
 - **목적**: 구글 드라이브에 업로드된 학습 데이터 준비를 위한 구조 정리.
+- **사용 데이터**: AIHub CCTV이상행동 데이터 (url: https://www.aihub.or.kr/aihubdata/data/view.do?currMenu=&topMenu=&aihubDataSe=data&dataSetSn=171)
 - **작업 내용**:
   - 비디오(mp4)와 라벨(XML) 파일 매칭.
-  - 불필요한 파일 제거 및 행동 유형볋로 이름 변경 후 정리.
+  - 불필요한 파일 제거 및 행동 유형별로 이름 변경 후 정리.
  
 - **구현 코드**:
   - `rename_and_move_files_with_matching()` 함수:
@@ -162,10 +199,13 @@ D --> E[행동 분류 및 경고]
   - YOLO를 사용하여 'person' 객체 탐지.
   - 여러 프레임에서 탐지된 바운딩 박스를 누적하여 최종 ROI 설정.
   - ROI 영역만 추출한 비디오로 저장.
+ ![ROI 탐지 예제](readme_img/roi.png)
+ 
 - **구현 코드**:
   - YOLO를 사용하여 `confidence_threshold` 기반 탐지.
   - 누적 좌표(`min_x, min_y, max_x, max_y`)로 ROI 설정.
- 
+
+
   ---
 
 ### 4. 전처리 방식
@@ -174,16 +214,47 @@ D --> E[행동 분류 및 경고]
 - **작업 내용**:
   - YOLO로 탐지된 객체별 MediaPipe로 자세 데이터 생성.
   - 행동 이벤트 구간에서 포즈 데이터를 시각화 및 저장.
+- **작업 과정 및 문제 해결**
+  - MediaPipe Pose 적용
+    ![MediaPipe 적용 결과](readme_img/mediapipe.png)
+
+  - BlazePose 적용
+    ![BlazePose 적용 결과](readme_img/blazepose.png)
+
 
 #### **4-2 엣지 검출 기반 방식**
-- **목적**: 주요 구조적 특징 강조하여 분석 효과 향상.
+- **목적**: 모델 경량화와 사람 외관의 구조적 특징 강조하여 분석 효과 향상.
 - **작업 내용**:
+  - 사용하는 데이터셋은 실내 크로마키 영상과 야외 촬영 영상 2가지로 각각 저처리를 진행.
+  - 크로마키 영상 경우 별도의 배경 없이 사람의 윤곽선만 검출.
+  - 야외 영상 경우 별도로 배경 제거 하지않고 진행.
   - Gaussian Blur, Median Filter 등으로 노이즈 제거.
   - Canny Edge Detection으로 윤곽선을 추출하고 저장.
+- **작업 과정 및 문제해결**
+  - 이미지 필터링 후 윤곽선 검출 테스트 결과
+![ROI 탐지 예제](readme_img/edge_test.png)
+  - 영상 배경 제거 및 필터링 후 윤곽선 검출 테스트 결과
+![ROI 탐지 예제](readme_img/non_green_edge.png)
+  - 최종 결과: 배경 제거 후 median 필터를 적용한 전처리 방식 선정 
+![ROI 탐지 예제](readme_img/non_green_edge2.png)
 
----
+  - 크로마키 영상마다의 배경 픽셀값이 상이하여 표본 영상을 선정하여 배경제거에 필요한 HSV값 범위 추출
+![ROI 탐지 예제](readme_img/non_green_edge3.png)
 
-### **ROI 탐지 결과 예시**
-![ROI 탐지 예제](readme_img/roi.png)
+### 5. 추후 계획
+#### **5-1 미디어파이프 기반 파이프라인 생성**
+  - blaze pose: 
+    
+  - YOLOv7 & YOLOv8 모델 Jetson Nano적용 테스트: 기존의 MediaPipe, blaze pose과 같은 모델과 달리 1stage로 KeyPoint 추출 가능
+
+#### **5-2 엣지 검출 기반 방식**
+  - 정상 행동 데이터 엣지 검출 작업 
+  - LSTM, GRU, TSM 모델 학습
+
+
+  ---
+
+
+
 
 
