@@ -1,4 +1,4 @@
-**# 범죄 탐지 소형 로봇 (TransBot-Anomaly-Tracker)**
+#**범죄 탐지 소형 로봇 (TransBot-Anomaly-Tracker)**
 
 CCTV 사각지대를 보완하고, 실시간 범죄 탐지로 주거 환경을 안전하게 만드는 소형 로봇 프로젝트입니다.
 
