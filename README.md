@@ -162,10 +162,13 @@ D --> E[행동 분류 및 경고]
   - YOLO를 사용하여 'person' 객체 탐지.
   - 여러 프레임에서 탐지된 바운딩 박스를 누적하여 최종 ROI 설정.
   - ROI 영역만 추출한 비디오로 저장.
+ ![ROI 탐지 예제](readme_img/roi.png)
+ 
 - **구현 코드**:
   - YOLO를 사용하여 `confidence_threshold` 기반 탐지.
   - 누적 좌표(`min_x, min_y, max_x, max_y`)로 ROI 설정.
- 
+
+
   ---
 
 ### 4. 전처리 방식
@@ -174,16 +177,39 @@ D --> E[행동 분류 및 경고]
 - **작업 내용**:
   - YOLO로 탐지된 객체별 MediaPipe로 자세 데이터 생성.
   - 행동 이벤트 구간에서 포즈 데이터를 시각화 및 저장.
+- **작업 과정 및 문제해결**
+  - MediaPipe 적용
+  
+  - blaze pose 적용
+ 
 
 #### **4-2 엣지 검출 기반 방식**
 - **목적**: 주요 구조적 특징 강조하여 분석 효과 향상.
 - **작업 내용**:
   - Gaussian Blur, Median Filter 등으로 노이즈 제거.
   - Canny Edge Detection으로 윤곽선을 추출하고 저장.
+- **작업 과정 및 문제해결**
+  - 
+![ROI 탐지 예제](readme_img/edge_test.png)
+![ROI 탐지 예제](readme_img/non_green_edge.png)
 
----
 
-### **ROI 탐지 결과 예시**
-![ROI 탐지 예제](readme_img/roi.png)
+
+
+### 5. 추후 계획
+#### **5-1 미디어파이프 기반 파이프라인 생성**
+  - blaze pose: 
+    
+  - YOLOv7 & YOLOv8 모델 Jetson Nano적용 테스트: 기존의 MediaPipe, blaze pose과 같은 모델과 달리 1stage로 KeyPoint 추출 가능
+
+#### **5-2 엣지 검출 기반 방식**
+  - 정상 행동 데이터 엣지 검출 작업 
+  - LSTM, GRU, TSM 모델 학습
+
+
+  ---
+
+
+
 
 
