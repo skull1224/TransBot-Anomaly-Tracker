@@ -231,7 +231,8 @@ D --> E[행동 분류 및 경고]
   - 영상 배경 제거 및 필터링 후 윤곽선 검출 테스트 결과
 ![ROI 탐지 예제](readme_img/non_green_edge.png)
 
-
+  - 최종 결과: 배경 제거 후 median 필터를 적용한 전처리 방식 선정 
+![ROI 탐지 예제](readme_img/non_green_edge2.png)
 
 
 ### 5. 추후 계획
