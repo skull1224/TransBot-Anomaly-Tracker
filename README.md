@@ -121,8 +121,8 @@ Mapping 이후 Goal position을 입력하면 해당 위치로 이동하는 모�
 | **기능**         | **최초 검토된 모델**              |        **최종 선정된 모델**                   | **이유**                                          |
 |-----------------------|------------------------------- | ----------------|--------------------------------------------------|
 | 객체 탐지              | EfficientNet, MobileNet, 3D CNN   |     YOLO (Tiny 버전)        | 실시간 객체 탐지 성능과 경량화된 구조, Jetson Nano에서 실시간 처리 가능.  |
-| backbone 모델(YOLO 미사용시)| GRU, LSTM, TSM                   |     GRU, LSTM, TSM       | 시간적 패턴 분석 기능, 상황에 맞는 유연한 조합 사용 가능.         |
-| 시계열 분석 모델          | EfficientNet, MobileNet                   |  YOLO (내장된 CNN 기능)         | YOLO (내장된 CNN 기능)         |
+| 시계열 분석 모델        | GRU, LSTM, TSM                   |     GRU, LSTM, TSM       | 시간적 패턴 분석 기능, 상황에 맞는 유연한 조합 사용 가능.         |
+| backbone 모델(YOLO 미사용시) | EfficientNet, MobileNet                   |  YOLO (내장된 CNN 기능)         | YOLO (내장된 CNN 기능)         |
 
 ---
 
